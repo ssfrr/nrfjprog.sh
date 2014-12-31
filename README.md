@@ -6,11 +6,13 @@ which relies on JLinkExe to interface with the JLink hardware.
 
 usage:
 
-nrfjprog.sh action hexfile
+```
+nrfjprog.sh <action> [hexfile]
+```
 
-where action is one of
-  --reset
-  --pin-reset
-  --erase-all
-  --flash
-  --flash-softdevice
+where action is one of:
+ * `--reset`
+ * `--pin-reset`
+ * `--erase-all`
+ * `--flash`
+ * `--flash-softdevice`
