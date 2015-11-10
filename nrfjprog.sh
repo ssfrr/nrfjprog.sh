@@ -17,6 +17,7 @@ where action is one of
   --flash
   --flash-softdevice
   --rtt
+  --gdbserver
 
 EOF
 
@@ -33,6 +34,7 @@ HEX=$2
 
 JLINK="JLinkExe $JLINK_OPTIONS"
 JLINKGDBSERVER="JLinkGDBServer $JLINK_OPTIONS"
+GDB_PORT=2331
 
 # the script commands come from Makefile.posix, distributed with
 # nrf51-pure-gcc. I've made some changes to use hexfiles instead of binfiles
@@ -115,6 +117,8 @@ elif [ "$1" = "--rtt" ]; then
     JLinkRTTClient
     echo -e "\n${STATUS_COLOR}Killing RTT server ($JLINK_PID)...${RESET}"
     kill $JLINK_PID
+elif [ "$1" = "--gdbserver" ]; then
+    $JLINKGDBSERVER -port $GDB_PORT
 else
     echo "$USAGE"
 fi
