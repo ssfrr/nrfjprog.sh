@@ -60,7 +60,8 @@ elif [ "$1" = "--erase-all" ]; then
     echo ""
     echo -e "${STATUS_COLOR}perfoming full erase...${RESET}"
     echo ""
-    echo "w4 4001e504 2" > $TMPSCRIPT
+    echo "h" > $TMPSCRIPT
+    echo "w4 4001e504 2" >> $TMPSCRIPT
     echo "w4 4001e50c 1" >> $TMPSCRIPT
     echo "sleep 100" >> $TMPSCRIPT
     echo "r" >> $TMPSCRIPT
@@ -72,6 +73,7 @@ elif [ "$1" = "--flash" ]; then
     echo -e "${STATUS_COLOR}flashing ${HEX}...${RESET}"
     echo ""
     echo "r" > $TMPSCRIPT
+    echo "h" >> $TMPSCRIPT
     echo "loadfile $HEX" >> $TMPSCRIPT
     echo "r" >> $TMPSCRIPT
     echo "g" >> $TMPSCRIPT
@@ -82,13 +84,15 @@ elif [ "$1" = "--flash-softdevice" ]; then
     echo ""
     echo -e "${STATUS_COLOR}flashing softdevice ${HEX}...${RESET}"
     echo ""
-    # Write to NVMC to enable erase, do erase all, wait for completion. reset
-    echo "w4 4001e504 2" > $TMPSCRIPT
+    # Halt, write to NVMC to enable erase, do erase all, wait for completion. reset
+    echo "h"  > $TMPSCRIPT
+    echo "w4 4001e504 2" >> $TMPSCRIPT
     echo "w4 4001e50c 1" >> $TMPSCRIPT
     echo "sleep 100" >> $TMPSCRIPT
     echo "r" >> $TMPSCRIPT
-    # Write to NVMC to enable write. Write mainpart, write UICR. Assumes device is erased.
-    echo "w4 4001e504 1" > $TMPSCRIPT
+    # Halt, write to NVMC to enable write. Write mainpart, write UICR. Assumes device is erased.
+    echo "h" >> $TMPSCRIPT
+    echo "w4 4001e504 1" >> $TMPSCRIPT
     echo "loadfile $HEX" >> $TMPSCRIPT
     echo "r" >> $TMPSCRIPT
     echo "g" >> $TMPSCRIPT
